@@ -1,6 +1,7 @@
 package com.example.chadi.orderfood;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.chadi.orderfood.Common.Common;
 import com.example.chadi.orderfood.Model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +28,7 @@ public class SignIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_sign_in);
         init();
         //init firebase;
         final FirebaseDatabase database=FirebaseDatabase.getInstance();
@@ -49,10 +51,14 @@ public class SignIn extends AppCompatActivity {
                             //GET USER INFORMATION
                             alertDialog.dismiss();
                             User user = dataSnapshot.child(edtPhone.getText().toString()).getValue(User.class);
+                            user.setPhone(edtPhone.getText().toString()); //Set phone
                             if (user.getPassword().equals(edtPassword.getText().toString())) {
-                                Toast.makeText(SignIn.this, "Sign in successfuly", Toast.LENGTH_SHORT).show();
+                                Intent homeIntent=new Intent(SignIn.this,Home.class);
+                                Common.CurrentUser=user;
+                                startActivity(homeIntent);
+                                finish();
                             } else {
-                                Toast.makeText(SignIn.this, "Wrong Pas  sword", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignIn.this, "Wrong Password", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else {
