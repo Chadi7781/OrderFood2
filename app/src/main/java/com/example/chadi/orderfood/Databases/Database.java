@@ -22,7 +22,7 @@ public class Database extends SQLiteAssetHelper {
     public List<Order>getCarts(){
         SQLiteDatabase db=getReadableDatabase();
         SQLiteQueryBuilder qb=new SQLiteQueryBuilder();
-        String[] sqlSelect={"ProductName","ProductId","Quantity","Price","Discount"};
+        String[] sqlSelect={"productName","productId","quantity","price","discount"};
         String sqlTable="OrderDetail";
         qb.setTables(sqlTable);
         Cursor c=qb.query(db,sqlSelect,null,null,null,null,null);
@@ -30,11 +30,11 @@ public class Database extends SQLiteAssetHelper {
         final List<Order>result=new ArrayList<>();
         if(c.moveToFirst()){
             do{
-                result.add(new Order(c.getString(c.getColumnIndex("ProductId")),
-                                    c.getString(c.getColumnIndex("ProductName")),
-                                    c.getString(c.getColumnIndex("Quantity")),
-                                    c.getString(c.getColumnIndex("Discount")),
-                                    c.getString(c.getColumnIndex("Price"))
+                result.add(new Order(c.getString(c.getColumnIndex("productId")),
+                                    c.getString(c.getColumnIndex("productName")),
+                                    c.getString(c.getColumnIndex("quantity")),
+                                    c.getString(c.getColumnIndex("discount")),
+                                    c.getString(c.getColumnIndex("price"))
                                     ));
             }while (c.moveToNext());
         }
@@ -44,7 +44,7 @@ public class Database extends SQLiteAssetHelper {
     public void addToCart(Order order){
 
         SQLiteDatabase db=getReadableDatabase();
-        String query=String.format("INSRET INTO OrderDetail(ProductId,ProductName,Quantity,Price,Discount) VALUES('%s','%s','%s','%s','%s');"
+        String query=String.format("INSRET INTO  OrderDetail (productId,productName,quantity,price,discount) values('%s','%s','%s','%s','%s');"
         ,order.getProductId(),
          order.getProductName(),
          order.getQuantity(),

@@ -6,10 +6,9 @@ public class User {
         private String Password;
         private String Phone;
 
-        public User(String name , String password, String phone){
+        public User(String name , String password){
             Name=name;
             Password=password;
-            Phone=phone;
         }
 
     public String getPhone() {
